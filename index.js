@@ -1,5 +1,6 @@
 function loadAdmin() {
-  alert("test");
+  alert("Loaded into Admin!");
+  
 
 }
 
