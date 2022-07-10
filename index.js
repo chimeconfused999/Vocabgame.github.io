@@ -1,5 +1,10 @@
 function loadAdmin() {
-  var button = document.getElementById()
+  var button = document.getElementById("todata")
+  var input = document.getElementById("input")
+
+  
+
+
 }
 
 var myVar;
