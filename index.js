@@ -1,5 +1,5 @@
 function loadAdmin() {
-    document.getElementById("header1").style.visibility="hidden";
+  var button = document.getElementById()
 }
 
 var myVar;
