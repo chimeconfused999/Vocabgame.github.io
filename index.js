@@ -2,7 +2,7 @@ function loadAdmin() {
   var button = document.getElementById("todata")
   var input = document.getElementById("input")
 
-  alert("test)
+  alert("test");
 
 
 }
