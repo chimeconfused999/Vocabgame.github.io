@@ -72,7 +72,7 @@ function submitWord() {
    var word = $("#Word").val();
    var category = $("#Category").val();
 
-   db.doc('wordle/Words').update({category:category, word:word});
+   db.doc('wordle/Words').set({category:category, word:word});
    alert("Submitted Word! " + word)
 
 }
