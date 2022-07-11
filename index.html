@@ -48,7 +48,7 @@
       <td valign="middle"> Admin    </td>
       <input id="Category" value="">Category</input>   <br>
       <input id="Word" value="">Word</input>   <br>
-      <button id=SubmitUserInput>Submit</button>   <br>
+      <button id=SubmitUserInput onclick="submitWord()">Submit</button>   <br>
     </tr> 
 
     <tr width="100%" align="center" >
@@ -73,6 +73,7 @@ function submitWord() {
     var category = document.getElementById("Category")
 
     db.doc('wordle/test').update({category: word});
+    alert("Submitted Word!")
 
 }
 function initApp(O) {
