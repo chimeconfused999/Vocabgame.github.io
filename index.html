@@ -2,8 +2,7 @@
 <html>
 <body>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-
-
+  
 <title>
     Vocab Game 
 </title>
@@ -36,30 +35,15 @@
       var div = document.getElementById("buttons");
       div.style.display ='none';
     }
-    // Initialize the FirebaseUI Widget using Firebase.
-var ui = new firebaseui.auth.AuthUI(firebase.auth()); 
-ui.start('#firebaseui-auth-container', {
-  signInOptions: [
-    firebase.auth.EmailAuthProvider.PROVIDER_ID
-  ],
-  // Other config options...
-});
-    
-  });
-
 // Command for listing the items in the database. 
 // db.doc('wordle/test').get().then( (doc)=> {
 //  console.log(doc.data()); } ) 
   </script>
+  <script src="index.js" ></script>
+<script type="module">
+  </script>
+<style src="index.css"></style>>
  
 
 </body>
 </html>
-
-
-
-<script src="index.js" ></script>
-<script type="module">
-
-  </script>
-<style src="index.css"></style>>
