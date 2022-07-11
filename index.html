@@ -61,7 +61,7 @@
     firebase.initializeApp(firebaseConfig); 
     var  editors=[], qdata={}, nchoice=0, realtime, debug=0, role='student', admin=0, db = firebase.firestore();
 
-    var firebaseRef = firebase.database().ref();
+    const db = firebase.firestore();
 
     document.getElementById('Submit').addEventListener('click', function(){
             var data = {
