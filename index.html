@@ -45,10 +45,10 @@
 
   <table id=Middle1 width="100%" border="1">   
     <tr width="100%" align="center" >
-      <td valign="middle"> Admin
-         <input id=SubmitUserInput value=""></input>   
-        <button id=SubmitUserInput>Submit</button>   
-      </td>
+      <td valign="middle"> Admin    </td>
+      <input id="Category" value="">Category</input>   <br>
+      <input id="Word" value="">Word</input>   <br>
+      <button id=SubmitUserInput>Submit</button>   <br>
     </tr> 
 
     <tr width="100%" align="center" >
@@ -64,7 +64,17 @@
   </table>
  
     <script>
+      // Command for listing the items in the database. 
+// db.doc('wordle/test').get().then( (doc)=> {
+//  console.log(doc.data()); } ) 
+//db.doc('wordle/test').update({b: 16});
+function submitWord() {
+    var word = document.getElementById("Word")
+    var category = document.getElementById("Category")
 
+    db.doc('wordle/test').update({category: word});
+
+}
 function initApp(O) {
     firebase.auth().onAuthStateChanged(function(user) {
      if (user) { 
@@ -117,7 +127,7 @@ function initApp(O) {
       } 
 
     </script>
+
+    
 </body>
-
-
 </html>
