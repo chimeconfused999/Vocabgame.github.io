@@ -1,3 +1,4 @@
+
 function initApp(O) {
   firebase.auth().onAuthStateChanged(function(user) {
    if (user) { 
@@ -48,22 +49,3 @@ function SignIn(O) {
       var signout = `${n} <button onclick="SignOut({});">Logout</button> `; 
       $('#'+id).html( signout);
     } 
-    var name, email, emailVerified, uid, uinfo={};
-    var firebaseConfig = {
-      apiKey: "AIzaSyD8SyHAMMVV0Gtcs871LSM0tficArYX5eg",
-      authDomain: "zrenix-aae2e.firebaseapp.com",
-      databaseURL: "https://zrenix-aae2e.firebaseio.com",
-      projectId: "zrenix-aae2e",
-      storageBucket: "zrenix-aae2e.appspot.com",
-      messagingSenderId: "1095365181062",
-      appId: "1:1095365181062:web:db9b34e80b0572fc",
-      measurementId: "G-GR8YWKSF7F"
-    };
-    firebase.initializeApp(firebaseConfig); 
-    var  editors=[], qdata={}, nchoice=0, realtime, debug=0, role='student', admin=0, db = firebase.firestore();
-
-    
-    window.addEventListener('load', function() { 
-      initApp({}); 
-    });
-  
