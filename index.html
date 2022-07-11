@@ -46,7 +46,7 @@
 
   </table>
  
-    <script>
+    <script type="module">
     var name, email, emailVerified, uid, uinfo={};
     var firebaseConfig = {
       apiKey: "AIzaSyD8SyHAMMVV0Gtcs871LSM0tficArYX5eg",
@@ -63,12 +63,27 @@
 
     const db = firebase.firestore();
 
-    document.getElementById('Submit').addEventListener('click', function(){
-            var data = {
-              category: document.getElementById("Category").value,
-              word: document.getElementById("Word").value
-            }
-          });
+    var submitData = document.getElementById('Submit')
+
+   submitData.addEventListener('click', (e) => {
+
+        var Category = document.getElementById('Category').value;
+        var Word = document.getElementById('Word').value;
+
+        // const newKey = push(child(ref(database), 'users')).key;
+
+        set(ref(database, 'wordle/' + username), {
+            category: Category,
+            word: Word,
+        }).then(() => {
+            // Data saved successfully!
+            alert('data submitted');
+        })
+            .catch((error) => {
+                // The write failed...
+                alert(error);
+            });
+});
     
         
     window.addEventListener('load', function() { 
