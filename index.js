@@ -1,9 +1,3 @@
-function loadAdmin() {
-  alert("Loaded into Admin!");
-  
-
-}
-
 function initApp(O) {
   firebase.auth().onAuthStateChanged(function(user) {
    if (user) { 
