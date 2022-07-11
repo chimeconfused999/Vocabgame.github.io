@@ -66,19 +66,4 @@ function SignIn(O) {
     window.addEventListener('load', function() { 
       initApp({}); 
     });
-
-const userId = document.getElementById('userId');
-const category = document.getElementById('category');
-const word = document.getElementById('word');
-const addBtn = document.getElementById('addBtn');
-const updateBtn = document.getElementById('updateBtn');
-const removeBtn = document.getElementById('removeBtn'); 
-const database = firebase.database();
-const wordsRef = database.ref('/wordle');
-addBtn.addEventListener('click', e => {
-  e.preventDefault();
-  wordsRef.child(userId.value).set({
-    category: category.value,
-    word: word.value
-  });
-});
+  
