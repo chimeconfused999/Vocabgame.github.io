@@ -74,19 +74,17 @@ function SignIn(O) {
     });
 
 const userId = document.getElementById('userId');
-const firstName = document.getElementById('firstName');
-const lastName = document.getElementById('lastName');
-const age = document.getElementById('age');
+const category = document.getElementById('category');
+const word = document.getElementById('word');
 const addBtn = document.getElementById('addBtn');
 const updateBtn = document.getElementById('updateBtn');
 const removeBtn = document.getElementById('removeBtn'); 
 const database = firebase.database();
-const usersRef = database.ref('/wordle');
+const wordsRef = database.ref('/wordle');
 addBtn.addEventListener('click', e => {
   e.preventDefault();
-  usersRef.child(userId.value).set({
-    first_name: firstName.value,
-    last_name: lastName.value,
-    age: age.value
+  wordsRef.child(userId.value).set({
+    category: category.value,
+    word: word.value
   });
 });
