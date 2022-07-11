@@ -1,4 +1,3 @@
-
 function initApp(O) {
   firebase.auth().onAuthStateChanged(function(user) {
    if (user) { 
