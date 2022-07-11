@@ -1,133 +1,53 @@
-
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
-  <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta charset="UTF-8">
-   
-   
+<html>
+<body>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  
+<title>
+    Vocab Game 
+</title>
 
+  </head> 
+  <div id ="buttons" class="buttons">
+    <button id="Beginner  " onclick="style.display = 'none'">Beginner</button>
+    <button id="Medicore" onclick="style.display = 'none'">Medicore</button>
+    <button id="Medium" onclick="style.display = 'none'">Medium</button>
+    <button id="Advanced" onclick="style.display = 'none'">Advanced</button>
+  </div>
+  <input id="output" type="text">
+  <button>Admin</button>
+  <input id="input" type="text">
+  <button id="todata" onclick="loadAdmin()">Add Words to Database</button>
+  <span style='float:right;'> <span id=Login data-logged=0>Login</span>   </span>
+  <button id="Login">Login</button>
+<button id="Logout">Logout</button>
+  <div id=Top21></div>
+  <p>test</p>
+  <script src="https://www.gstatic.com/firebasejs/ui/6.0.1/firebase-ui-auth.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/ui/4.3.0/firebase-ui-auth.js"></script>
   <script src="https://www.gstatic.com/firebasejs/7.6.1/firebase-app.js"></script>
   <script src="https://www.gstatic.com/firebasejs/7.6.1/firebase-analytics.js"></script>
   <script src="https://www.gstatic.com/firebasejs/7.6.1/firebase-auth.js"></script>
   <script src="https://www.gstatic.com/firebasejs/7.6.1/firebase-firestore.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/5.9.3/firebase-database.js"></script>
-
-
   
-
-</head>
-
-<body>
-    <span  id=Top11 >HOME</span>     
-    <span style='float:right;'> <span id=Login data-logged=0>Login</span>   </span>
-  <div id=Top21></div>
-  <hr/>
-
-  <table id=Middle1 width="100%" border="1">   
-    <tr width="100%" align="center" >
-  <head> Admin </head> <br>
-      <input id="Category" type="text">Category</input> <br>
-        <input id="Word" type ="text">Word</input> <br>
-        <button id="Submit">Submit</button> <br>
-    </tr> 
-
-    <tr width="100%" align="center" >
-      <td valign="middle"> Student
-         <input id=SubmitUserInput value=""  /> 
-        <button id=SubmitUserInput>Submit</button>   
-          <br/><input id=SubmittedUserInput value=""  disabled />
+  <link type="text/css" rel="stylesheet" href="https://www.gstatic.com/firebasejs/ui/6.0.1/firebase-ui-auth.css" />
 
 
-      </td>
-    </tr> 
-
-  </table>
- 
-    <script>
-    var name, email, emailVerified, uid, uinfo={};
-    var firebaseConfig = {
-      apiKey: "AIzaSyD8SyHAMMVV0Gtcs871LSM0tficArYX5eg",
-      authDomain: "zrenix-aae2e.firebaseapp.com",
-      databaseURL: "https://zrenix-aae2e.firebaseio.com",
-      projectId: "zrenix-aae2e",
-      storageBucket: "zrenix-aae2e.appspot.com",
-      messagingSenderId: "1095365181062",
-      appId: "1:1095365181062:web:db9b34e80b0572fc",
-      measurementId: "G-GR8YWKSF7F"
-    };
-    firebase.initializeApp(firebaseConfig); 
-    var  editors=[], qdata={}, nchoice=0, realtime, debug=0, role='student', admin=0, db = firebase.firestore();
-
-    var firebaseRef = firebase.database().ref();
-
-    document.getElementById('Submit').addEventListener('click', function(){
-            var data = {
-              category: document.getElementById("Category").value,
-              word: document.getElementById("Word").value
-            }
-          });
-    
-        
-    window.addEventListener('load', function() { 
-      initApp({}); 
-    });
-
-function initApp(O) {
-    firebase.auth().onAuthStateChanged(function(user) {
-     if (user) { 
-       uinfo = user; email=user.email; 
-       LoggedOutDisplay({id:'Login',photo:0},user);
-     } else {  LoginDisplay({id:'Login'});  }
-    }, function(error) { console.log(error); }
-    );
-  };
-
-  function test(O) {
-    db.doc('/public/v').onSnapshot(function(doc) {
-      console.log(doc.data());
-    });
-  }
-
-  function SignIn(O) {
-      var errors;
-      if(O.provider=='microsoft') {  var provider = new firebase.auth.OAuthProvider('microsoft.com');
-      } else {  var provider = new firebase.auth.GoogleAuthProvider(); 
-      }
-      if(O.option=='Redirect') { // Sign-in with redirect
-        firebase.auth().signInWithRedirect(provider);
-        firebase.auth().getRedirectResult().then(function(result) {
-            if (result.credential) { var token = result.credential.accessToken; }
-            var user = result.user;
-        });
-      } else { // Sign-in with Popup [Default]
-        firebase.auth().signInWithPopup(provider).then(function(result) {
-            var token = result.credential.accessToken, user = result.user;
-        }).catch(function(error) { errors = error; });
-      }
-    }
-
-    function SignOut(O) { firebase.auth().signOut().then(function(results) {}).catch(function(error) { errors = error;}); }
-
-      function LoginDisplay(O) { 
-        var id= O.hasOwnProperty('id')? O.id : 'Login';
-       $('#'+id).html(
-         '<span>Sign-in with </span> ' 
-         + '<button onclick="SignIn({option:'+"'Redirect'"+'});">Google</button> '
-         + '<button onclick="SignIn({option:' + "'Redirect',provider:'microsoft'" + '});">Microsoft</button>'
-       );
-      } 
-      function LoggedOutDisplay(O,user) { 
-        var id= O.hasOwnProperty('id')? O.id : 'Login';
-        var n = '<span title='+user.email+'>'+user.displayName+'</span>'; 
-        var signout = `${n} <button onclick="SignOut({});">Logout</button> `; 
-        $('#'+id).html( signout);
-      } 
-// Command for listing the items in the database. 
-// db.doc('wordle/test').get().then( (doc)=> { // console.log(doc.data()); } )
-    </script>
-    
 </body>
 </html>
+<script src="index.js">
+  document.querySelector('#buttons')
+  .addEventListener('click', event => {
+    let target = event.target;
+    if (target.matches('button')) {
+      let value = target.innerHTML
+
+      document.querySelector('#output').value += value
+      document.querySelector('#output').disabled = true
+      var div = document.getElementById("buttons");
+      div.style.display ='none';
+    }
+// Command for listing the items in the database. 
+// db.doc('wordle/test').get().then( (doc)=> {
+//  console.log(doc.data()); } ) 
+})
