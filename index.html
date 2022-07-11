@@ -28,11 +28,10 @@
 
   <table id=Middle1 width="100%" border="1">   
     <tr width="100%" align="center" >
-      <td valign="middle"> Admin
-         <input id="Category" value="">Category</input>   
-         <input id="Word" value="">Word</input>
-        <button id="Submit">Submit</button>   
-      </td>
+  <head> Admin </head> <br>
+      <input id="Category" type="text">Category</input> <br>
+        <input id="Word" type ="text">Word</input> <br>
+        <button id="Submit">Submit</button> <br>
     </tr> 
 
     <tr width="100%" align="center" >
@@ -64,8 +63,11 @@
 
     var firebaseRef = firebase.database().ref();
 
-    document.getElementById('Submite').addEventListener('click', function(){
-            firebaseRef.push(document.getElementById('email').value);
+    document.getElementById('Submit').addEventListener('click', function(){
+            var data = {
+              category: document.getElementById("Category").value,
+              word: document.getElementById("Word").value
+            }
           });
     
         
