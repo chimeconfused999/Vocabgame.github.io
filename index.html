@@ -14,8 +14,7 @@
   <script src="https://www.gstatic.com/firebasejs/5.9.3/firebase-database.js"></script>
   <script src="https://www.gstatic.com/firebasejs/3.1.0/firebase-auth.js"></script>
   <script src="https://www.gstatic.com/firebasejs/3.1.0/firebase-database.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/7.14.4/firebase.js"></script>
-
+  
 
   
 
@@ -61,32 +60,7 @@
     };
     firebase.initializeApp(firebaseConfig); 
     var  editors=[], qdata={}, nchoice=0, realtime, debug=0, role='student', admin=0, db = firebase.firestore();
-
-    const db = firebase.firestore();
-
-    var submitData = document.getElementById('Submit')
-
-   submitData.addEventListener('click', (e) => {
-
-        var Category = document.getElementById('Category').value;
-        var Word = document.getElementById('Word').value;
-
-        // const newKey = push(child(ref(database), 'users')).key;
-
-        set(ref(database, 'wordle/' + username), {
-            category: Category,
-            word: Word
-        }).then(() => {
-            // Data saved successfully!
-            alert('data submitted');
-        })
-            .catch((error) => {
-                // The write failed...
-                alert(error);
-            });
-});
-    
-        
+       
     window.addEventListener('load', function() { 
       initApp({}); 
     });
