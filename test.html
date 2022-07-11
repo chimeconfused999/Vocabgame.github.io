@@ -1,0 +1,52 @@
+<html>
+    <head>
+       
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/ui/4.3.0/firebase-ui-auth.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/7.6.1/firebase-app.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/7.6.1/firebase-analytics.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/7.6.1/firebase-auth.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/7.6.1/firebase-firestore.js"></script>
+        
+        
+    </head>
+    <BODY>
+        
+    </BODY>
+
+<button id="Login">Login</button>
+<button id="Logout">Logout</button>
+
+
+    <script>
+
+var db = firebase.firestore();
+
+var firebaseConfig = {
+    apiKey: "AIzaSyAb46T6Htsp0_VkTugv9a8DA2vzTQZ7ogk",
+    authDomain: "vocabulary-game-589f7.firebaseapp.com",
+    databaseURL: "https://vocabulary-game-589f7.firebaseio.com",
+    projectId: "vocabulary-game-589f7",
+    storageBucket: "vocabulary-game-589f7.appspot.com"
+};
+firebase.initializeApp(firebaseConfig); 
+
+
+       function initApp(O) {
+    firebase.auth().onAuthStateChanged(function(user) {
+     if (user) { 
+       uinfo = user; email=user.email; 
+       console.log(user);
+     } else { 
+       console.log(user);
+     }
+    }, function(error) { console.log(error); }
+    );
+  };
+    var  debug=0, role='student', admin=0, db = firebase.firestore(), A = new Assessment({}), I=new Info(); 
+    window.addEventListener('load', function() {       
+      initApp({});      
+    });
+    </script>
+
+</html>
