@@ -69,11 +69,11 @@
 //  console.log(doc.data()); } ) 
 //db.doc('wordle/test').update({b: 16});
 function submitWord() {
-    var word = document.getElementById("Word")
-    var category = document.getElementById("Category")
+   var word = $("#Word").val();
+   var category = $("#Category").val();
 
-    db.doc('wordle/test').update({category: word});
-    alert("Submitted Word!")
+   db.doc('wordle/Words').update({category:category, word:word});
+   alert("Submitted Word! " + word)
 
 }
 function initApp(O) {
