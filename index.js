@@ -44,7 +44,7 @@ function SignIn(O) {
     } 
     function LoggedOutDisplay(O,user) { 
       var id= O.hasOwnProperty('id')? O.id : 'Login';
-      var n = '<span title='+user.email+'>'+user.displayName+'</span>'; 
+      var n = '<span title='+user.email+'>'+user.displayName+'>'+user.photo+'</span>';  
       var signout = `${n} <button onclick="SignOut({});">Logout</button> `; 
       $('#'+id).html( signout);
     } 
