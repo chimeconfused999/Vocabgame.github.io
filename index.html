@@ -48,7 +48,7 @@
       <td valign="middle"> Admin    </td>
       <input id="Category" value="">Category</input>   <br>
       <input id="Word" value="">Word</input>   <br>
-      <button id=SubmitUserInput onclick="submitWord()">Submit</button>   <br>
+      <button id=SubmitUserInput onclick="checkSubmit()">Submit</button>   <br>
     </tr> 
 
     <tr width="100%" align="center" >
@@ -76,9 +76,19 @@ function submitWord() {
     category:category,
     word:word
    })
-   alert("Submitted Word! " + word)
-
+   alert("Do you want to submit the word " + word + "?")
 }
+
+function checkSubmit() {
+  var word = document.getElementById("Word");
+
+  if (word.length < 5) {
+    alert("Your word isnt 5 letters long!")
+  }
+  else;
+    submitWord()
+}
+
 function initApp(O) {
     firebase.auth().onAuthStateChanged(function(user) {
      if (user) { 
