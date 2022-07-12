@@ -79,17 +79,6 @@ function submitWord() {
    alert("Do you want to submit the word " + word + "?")
 }
 
-function checkSubmit() {
-  let word = document.getElementById("Word").val()
-  let length = word.length
-
-  if (length < 5) {
-    alert("Your word isnt 5 letters long!")
-  }
-  else;
-    submitWord()
-}
-
 function initApp(O) {
     firebase.auth().onAuthStateChanged(function(user) {
      if (user) { 
