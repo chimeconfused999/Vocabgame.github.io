@@ -134,7 +134,7 @@ test({});
 function initApp(O) {
     firebase.auth().onAuthStateChanged(function(user) {
      if (user) { 
-       uinfo = user; email=user.email; photo = user.photo.get
+       uinfo = user; email=user.email;
        LoggedOutDisplay({id:'Login',photo:0},user);
      } else {  LoginDisplay({id:'Login'});  }
     }, function(error) { console.log(error); }
