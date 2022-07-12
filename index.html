@@ -38,92 +38,110 @@
 </head>
 
 <body>
-    <span  id=Top11 >HOME</span>     
+    <span id=Top11 >HOME</span>     
     <span style='float:right;'> <span id=Login data-logged=0>Login</span>   </span>
   <div id=Top21></div>
   <hr/>
 
   <table id=Middle1 width="100%" border="1">   
-    <tr width="50%" align="center" >
-      <select id="ddlViewBy">
-        <option value="Beginner" selected="selected">Beginner</option>
-        <option value="Medium">Medium</option>
-        <option value="Advanced">Advanced</option>
-      </select>
-      <input id="Word" value="" type="text">Word (Must be 5 letters)</input>   <br>
-      <button id=SubmitUserInput onclick="submitWord()" type="submit">Submit</button>   <br>
-    </tr> <br>
-    <tr align="center"> <br>
-      <input type="text" width="50%" id="submitbox">
-      <button onclick="wordle()">Submit</button> <br>
-      <p>Try 1:</p> <br>
-      <p>Try 2:</p> <br>
-      <p>Try 3:</p> <br>
-      <p>Try 4:</p> <br>
-      <p>Try 5:</p> 
-    </tr>
+    <tr width="100%" align="center" >
+      <td valign="middle"> Admin Panel<br>
+         <br/>
+          <button onclick="NewWord(); ">New</button>  
+          <button onclick="List('/wordle/words/word','WordList'); ">List the words</button>  
+          <p id="NewWord"></p> 
 
+        <br/> <span  id="WordList"></span> 
+      </td>
+    </tr> 
+
+    <tr width="100%" align="center" >
+      <td valign="middle"> Student <br>
+         <input id=SubmitUserInput value=""  /> <br>
+        <button id=SubmitUserInput>Submit</button> <br>
       </td>
     </tr> 
 
   </table>
  
     <script>
-      // Command for listing the items in the database. 
-// db.doc('wordle/test').get().then( (doc)=> {
-//  console.log(doc.data()); } ) 
-//db.doc('wordle/test').update({b: 16});
-
-var wS= "Äpple", wU = "Happy"; 
-
-function check(u, v) {
-   var uA = u.split(''), vA = v.split('');
-   for(var i in vA) {
-    var indx = uA.indexOf(vA[i]); 
-   }
- 
+var dbWords = '/wordle/words/word'; 
+function NewWord() { 
+  var id='NewWord'; 
+  var s= `
+         <p align = "center">New Word</p>
+         Word <input id=${id}W title='Word'  value=""></input> <br>
+         Category <input id=${id}C title='Category'  value=""></input> <br> 
+         Meaning <input id=${id}M title='Meaning'  value=""></input> <br>  
+        <button onclick=" Save('${id}'); ">Save</button>  
+  `;
+  $('#NewWord').html(s); 
 }
 
-function Check() {
-  var word = ("Happy");
-  var submitbox = document.getElementById("submitbox");
+function EditWord(v,c,m) { 
+  var id=v; 
+  var s= `
+         <p align = "center">Edit</p>
+         Word <input id=${id}W title='Word'  value="${v}">   </input> <br>
+         Category <input id=${id}C title='Category'  value="${c}">   </input> <br>
+         Meaning <input id=${id}M title='Meaning'  value="${m}">   </input> <br>
+        <button onclick=" Save('${id}'); ">Save Edits</button>  
+  `;
+  return s;  
+}
 
-  if (submitbox.val() === word) {
-    console.log("YOu win!")
+function Save(id){ var d={}; 
+  var v=$(`#${id}W`).val(), c=$(`#${id}C`).val(), m=$(`#${id}M`).val(); 
+  var v = (v=='')?'t':v;  
+  db.doc(`${dbWords}/${v}`).set({category:c, meaning:m});
+}
+
+function List(docid, oid) { 
+ db.collection(docid).get()
+ .then((querySnapshot) => {
+        var s = '', i=0;
+        querySnapshot.forEach((doc) => { var d=doc.data(), id=doc.id;  i++; 
+           // console.log(doc.id, " => ", doc.data());
+            s += '<br/>'+EditWord(doc.id, d.category, d.meaning)
+        });
+        $('#'+oid).html(s);
+    })
+
+}
+
+
+function update(id, e) { var k=e.attr('k'), v = e.val(); 
+ var d={}; d[k]=v; 
+ db.doc(id).set(d, {merge:true}); 
+}
+
+test({});
+  function test(O) {
+    db.doc('/wordle/test').onSnapshot(function(doc) {
+      var source = doc.metadata.hasPendingWrites ? 'Local' : 'Server';
+        if(doc.data()) {
+          if(source=='Server') {
+            $('#SubmitUserInput').val(doc.data().v);
+          }
+        }
+
+      console.log(doc.data());
+    });
   }
 
-}
 
-
-function submitWord() {
-   var word = $("#Word").val();
-   var e = document.getElementById("ddlViewBy");
-   var category = e.value;
-
-   db.collection('wordle').add({
-    category:category,
-    word:word
-   })
-   alert("Do you want to submit the word " + word + "?")
-   console.log(category,word)
-}
-
+//--------------------------
 function initApp(O) {
     firebase.auth().onAuthStateChanged(function(user) {
      if (user) { 
-       uinfo = user; email=user.email; 
-       LoggedOutDisplay({id:'Login',photo:1},user);
+       uinfo = user; email=user.email; photo = user.photo.get
+       LoggedOutDisplay({id:'Login',photo:0},user);
      } else {  LoginDisplay({id:'Login'});  }
     }, function(error) { console.log(error); }
     );
   };
 
-  function test(O) {
-    db.doc('/public/v').onSnapshot(function(doc) {
-      console.log(doc.data());
-    });
-  }
-
+  
   function SignIn(O) {
       var errors;
       if(O.provider=='microsoft') {  var provider = new firebase.auth.OAuthProvider('microsoft.com');
@@ -160,7 +178,7 @@ function initApp(O) {
       } 
 
     </script>
-
-    
 </body>
+
+
 </html>

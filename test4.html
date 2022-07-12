@@ -38,14 +38,14 @@
 </head>
 
 <body>
-    <span  id=Top11 >HOME</span>     
+    <span id=Top11 >HOME</span>     
     <span style='float:right;'> <span id=Login data-logged=0>Login</span>   </span>
   <div id=Top21></div>
   <hr/>
 
   <table id=Middle1 width="100%" border="1">   
     <tr width="100%" align="center" >
-      <td valign="middle"> Admin
+      <td valign="middle"> Admin Panel<br>
          <br/>
           <button onclick="NewWord(); ">New</button>  
           <button onclick="List('/wordle/words/word','WordList'); ">List the words</button>  
@@ -56,10 +56,9 @@
     </tr> 
 
     <tr width="100%" align="center" >
-      <td valign="middle"> Student
-         <input id=SubmitUserInput value=""  /> 
-        <button id=SubmitUserInput>Submit</button>   
-          <br/><input id=SubmittedUserInput value=""  disabled />
+      <td valign="middle"> Student <br>
+         <input id=SubmitUserInput value=""  /> <br>
+        <button id=SubmitUserInput>Submit</button> <br>
       </td>
     </tr> 
 
@@ -70,9 +69,10 @@ var dbWords = '/wordle/words/word';
 function NewWord() { 
   var id='NewWord'; 
   var s= `
-         <input id=${id}W title='Word' size=3 value=""></input> 
-         <input id=${id}C title='Category' size=7 value=""></input>   
-         <input id=${id}M title='Meaning' size=7 value=""></input>   
+         <p align = "center">New Word</p>
+         Word <input id=${id}W title='Word'  value=""></input> <br>
+         Category <input id=${id}C title='Category'  value=""></input> <br> 
+         Meaning <input id=${id}M title='Meaning'  value=""></input> <br>  
         <button onclick=" Save('${id}'); ">Save</button>  
   `;
   $('#NewWord').html(s); 
@@ -81,10 +81,11 @@ function NewWord() {
 function EditWord(v,c,m) { 
   var id=v; 
   var s= `
-         <input id=${id}W title='Word' size=3 value="${v}"></input> 
-         <input id=${id}C title='Category' size=7 value="${c}"></input>   
-         <input id=${id}M title='Meaning' size=7 value="${m}"></input>   
-        <button onclick=" Save('${id}'); ">Save</button>  
+         <p align = "center">Edit</p>
+         Word <input id=${id}W title='Word'  value="${v}">   </input> <br>
+         Category <input id=${id}C title='Category'  value="${c}">   </input> <br>
+         Meaning <input id=${id}M title='Meaning'  value="${m}">   </input> <br>
+        <button onclick=" Save('${id}'); ">Save Edits</button>  
   `;
   return s;  
 }
@@ -133,7 +134,7 @@ test({});
 function initApp(O) {
     firebase.auth().onAuthStateChanged(function(user) {
      if (user) { 
-       uinfo = user; email=user.email; 
+       uinfo = user; email=user.email; photo = user.photo.get
        LoggedOutDisplay({id:'Login',photo:0},user);
      } else {  LoginDisplay({id:'Login'});  }
     }, function(error) { console.log(error); }
