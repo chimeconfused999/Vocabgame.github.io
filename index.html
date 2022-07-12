@@ -46,6 +46,11 @@
   <table id=Middle1 width="100%" border="1">   
     <tr width="100%" align="center" >
       <td valign="middle"> Admin    </td>
+      <select id="ddlViewBy">
+        <option value="1" selected="selected">Beginner</option>
+        <option value="2">Medium</option>
+        <option value="3">Advanced</option>
+      </select>
       <input id="Category" value="" type="text">Category (Must be either beginner, medium, or advanced)</input>   <br>
       <input id="Word" value="" type="text">Word (Must be 5 letters)</input>   <br>
       <button id=SubmitUserInput onclick="submitWord()" type="submit">Submit</button>   <br>
@@ -68,9 +73,13 @@
 // db.doc('wordle/test').get().then( (doc)=> {
 //  console.log(doc.data()); } ) 
 //db.doc('wordle/test').update({b: 16});
+
+
+
 function submitWord() {
    var word = $("#Word").val();
-   var category = $("#Category").val();
+   var e = document.getElementById("ddlViewBy");
+   var category = e.value;
 
    db.collection('wordle').add({
     category:category,
