@@ -46,9 +46,9 @@
   <table id=Middle1 width="100%" border="1">   
     <tr width="100%" align="center" >
       <td valign="middle"> Admin    </td>
-      <input id="Category" value="">Category</input>   <br>
-      <input id="Word" value="">Word</input>   <br>
-      <button id=SubmitUserInput onclick="checkSubmit()">Submit</button>   <br>
+      <input id="Category" value="" type="text">Category</input>   <br>
+      <input id="Word" value="" type="text">Word</input>   <br>
+      <button id=SubmitUserInput onclick="checkSubmit()" type="submit">Submit</button>   <br>
     </tr> 
 
     <tr width="100%" align="center" >
@@ -80,9 +80,10 @@ function submitWord() {
 }
 
 function checkSubmit() {
-  var word = document.getElementById("Word");
+  let word = document.getElementById("Word").val()
+  let length = word.length
 
-  if (word.length < 5) {
+  if (length < 5) {
     alert("Your word isnt 5 letters long!")
   }
   else;
