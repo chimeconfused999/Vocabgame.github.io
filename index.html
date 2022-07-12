@@ -68,6 +68,12 @@
 // db.doc('wordle/test').get().then( (doc)=> {
 //  console.log(doc.data()); } ) 
 //db.doc('wordle/test').update({b: 16});
+function checkSubmit() {
+  var word = document.getElementById("Word").val();
+  
+  if (word.le)
+}
+
 function submitWord() {
    var word = $("#Word").val();
    var category = $("#Category").val();
@@ -83,7 +89,7 @@ function initApp(O) {
     firebase.auth().onAuthStateChanged(function(user) {
      if (user) { 
        uinfo = user; email=user.email; 
-       LoggedOutDisplay({id:'Login',photo:0},user);
+       LoggedOutDisplay({id:'Login',photo:1},user);
      } else {  LoginDisplay({id:'Login'});  }
     }, function(error) { console.log(error); }
     );
