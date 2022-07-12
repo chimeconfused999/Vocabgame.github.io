@@ -44,8 +44,7 @@
   <hr/>
 
   <table id=Middle1 width="100%" border="1">   
-    <tr width="100%" align="center" >
-      <td valign="middle"> Admin    </td>
+    <tr width="50%" align="center" >
       <select id="ddlViewBy">
         <option value="Beginner" selected="selected">Beginner</option>
         <option value="Medium">Medium</option>
@@ -53,13 +52,19 @@
       </select>
       <input id="Word" value="" type="text">Word (Must be 5 letters)</input>   <br>
       <button id=SubmitUserInput onclick="submitWord()" type="submit">Submit</button>   <br>
-    </tr> 
+    </tr> <br>
+    <tr align="center"> <br>
+      <input type="text" width="50%" id="submitbox">
+      <button onclick="wordle()">Submit</button> <br>
+      <p>Try 1:</p> <br>
+      <p>Try 2:</p> <br>
+      <p>Try 3:</p> <br>
+      <p>Try 4:</p> <br>
+      <p>Try 5:</p> 
+    </tr>
 
-    <tr width="100%" align="center" >
-      <td valign="middle"> Student
-         <input id=SubmitUserInput value=""  /> 
-        <button id=SubmitUserInput>Submit</button>   
-          <br/><input id=SubmittedUserInput value=""  disabled />
+    
+     
 
 
       </td>
@@ -72,7 +77,15 @@
 // db.doc('wordle/test').get().then( (doc)=> {
 //  console.log(doc.data()); } ) 
 //db.doc('wordle/test').update({b: 16});
+function wordle() {
+  var word = ("Happy");
+  var submitbox = document.getElementById("submitbox");
 
+  if (submitbox.val() === word) {
+    console.log("YOu win!")
+  }
+
+}
 
 
 function submitWord() {
@@ -85,7 +98,7 @@ function submitWord() {
     word:word
    })
    alert("Do you want to submit the word " + word + "?")
-   console.log(category:word)
+   console.log(category,word)
 }
 
 function initApp(O) {
