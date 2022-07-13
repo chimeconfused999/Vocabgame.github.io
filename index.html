@@ -43,7 +43,7 @@
   <div id=Top21></div>
   <hr/>
 
-  <table id=Middle1 width="100%" border="1">   
+  <table id="Middle1" width="100%" border="1">   
     <tr width="100%" align="center" >
       <td valign="middle"> Admin Panel<br>
          <br/>
@@ -151,7 +151,7 @@ function initApp(O) {
         firebase.auth().signInWithRedirect(provider);
         firebase.auth().getRedirectResult().then(function(result) {
             if (result.credential) { var token = result.credential.accessToken; }
-            var user = result.user;
+            document.getElementById("Middle1").style.display = "none";
         });
       } else { // Sign-in with Popup [Default]
         firebase.auth().signInWithPopup(provider).then(function(result) {
