@@ -150,8 +150,11 @@ function initApp(O) {
       if(O.option=='Redirect') { // Sign-in with redirect
         firebase.auth().signInWithRedirect(provider);
         firebase.auth().getRedirectResult().then(function(result) {
-            if (result.credential) { var token = result.credential.accessToken; }
-            document.getElementById("Middle1").style.display = "none";
+            if (result.credential) { 
+              var token = result.credential.accessToken; 
+              console.log(user + "logged in!")
+              document.getElementById("Middle1").style.display = "none";
+            }
         });
       } else { // Sign-in with Popup [Default]
         firebase.auth().signInWithPopup(provider).then(function(result) {
