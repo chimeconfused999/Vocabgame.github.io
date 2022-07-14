@@ -71,7 +71,11 @@ function NewWord() {
   var s= `
          <p align = "center">New Word</p>
         <input id=${id}W title='Word'  value=""></input> 
-        <input id=${id}C title='Category'  value=""></input>  
+        <select id="ddlViewBy">
+        <option ${id}B="Beginner">Beginner</option>
+        <option ${id}O="Medium">Medium</option>
+        <option ${id}A="Advanced">Advanced</option>
+        </select>
         <input id=${id}M title='Meaning'  value=""></input>   
         <button onclick=" Save('${id}'); ">Save</button>  
   `;
@@ -82,7 +86,7 @@ function EditWord(v,c,m) {
   var id=v; 
   var s= `
          <input id=${id}W title='Word'  value="${v}">   </input> 
-         <input id=${id}C title='Category'  value="${c}">   </input> 
+         <input id=(${id}B, ${id}O, ${id}A) title='Category'  value="${c}">   </input> 
          <input id=${id}M title='Meaning'  value="${m}">   </input> 
         <button onclick=" Save('${id}'); ">Save Edits</button>  
   `;
@@ -90,9 +94,9 @@ function EditWord(v,c,m) {
 }
 
 function Save(id){ var d={}; 
-  var v=$(`#${id}W`).val(), c=$(`#${id}C`).val(), m=$(`#${id}M`).val(); 
+  var v=$(`#${id}W`).val(), c=$(`#${id}O`).val(), m=$(`#${id}M`).val(); 
   var v = (v=='')?'t':v;  
-  db.doc(`${dbWords}/${v}`).set({category:c, meaning:m});
+  db.doc(`${dbWords}/${v}`).set({category:c, meaning:m, creater:email});
 }
 
 function List(docid, oid) { 
