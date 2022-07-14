@@ -24,6 +24,7 @@ function SignIn(O) {
       firebase.auth().getRedirectResult().then(function(result) {
           if (result.credential) { var token = result.credential.accessToken; }
           var user = result.user;
+          document.getElementById("Middle1").style.display="initial"
       });
     } else { // Sign-in with Popup [Default]
       firebase.auth().signInWithPopup(provider).then(function(result) {
