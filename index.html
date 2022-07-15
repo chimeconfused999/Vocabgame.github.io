@@ -44,7 +44,7 @@
   <hr/>
 
   <table id="Middle1" width="100%" border="1">   
-    <tr width="100%" align="center" >
+    <tr width="100%" align="left" >
       <td valign="middle"> Admin Panel<br>
          <br/>
           <button onclick="NewWord(); ">New</button>  
@@ -55,8 +55,8 @@
       </td>
     </tr> 
 
-    <tr width="100%" align="center" >
-      <td valign="middle"> Student <br>
+    <tr width="100%" align="left" >
+      <td valign="top"> Student <br>
          <input id=SubmitUserInput value=""  /> <br>
         <button id=SubmitUserInput>Submit</button> <br>
       </td>
@@ -72,17 +72,17 @@ function NewWord() {
 
 
 function EditWord(v,c,m, O) { 
-  var id=v, cat = '', cats = ["Beginner", "Medium", "Advanced"];
+  var id=v, cat = '', cats = ["Beginner", "Medium", "Advanced", "Ignore"];
   for (const e of cats) { 
     if(c==e) selected='selected'; else selected=''; 
     cat += `<option ${selected}>${e}</option>`; 
   }
   var s= `
-         <input id=${id}W title='Word'  value="${v}">   </input> 
+         <input id=${id}W  title='Word'  value="${v}" size=5>   </input> 
          <select id=${id}C title='Category'>${cat}</select> 
          <input id=${id}M title='Meaning'  value="${m}">   </input> 
-         <span>${O.modifier?O.modifier:''}</span>
         <button onclick=" Save('${id}'); ">Save</button>  
+        <span class=modifier style='display:none;'>${O.modifier?O.modifier:''}</span>
   `;
   return s;  
 }
@@ -95,9 +95,18 @@ function Save(id){ var d={};
 function List(docid, oid) { 
  db.collection(docid)
  .onSnapshot((querySnapshot) => {  //.get().then((querySnapshot) => {
-        var s = '', i=0;
+        var s = `
+         <button onclick=" $('.modifier').toggle(); ">Modifier</button>
+         <button onclick=" $('.Beginner').toggle(); ">Beginner</button>
+         <button onclick=" $('.Medium').toggle(); ">Medium</button>
+         <button onclick=" $('.Advanced').toggle(); ">Advanced</button>
+         <button onclick=" $('.Ignore').toggle(); ">Ignore</button>
+
+
+         `;
+        var i=0;
         querySnapshot.forEach((doc) => { var d=doc.data(), id=doc.id;  i++; 
-            s += `<br/> (${i})`+EditWord(doc.id, d.category, d.meaning, {modifier:d.modifier});
+            s += `<div class=${d.category}>(${i}) ${d.category}`+EditWord(doc.id, d.category, d.meaning, {modifier:d.modifier}) + `</div>`;
         });
         $('#'+oid).html(s);
     })
