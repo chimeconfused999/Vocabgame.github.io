@@ -66,46 +66,38 @@
  
     <script>
 var dbWords = '/wordle/words/word'; 
-function NewWord() { 
-  var id='NewWord'; 
-  var s= `
-         <p align = "center">New Word</p>
-        <input id=${id}W title='Word'  value=""></input> 
-        <select id="ddlViewBy">
-        <option ${id}B="Beginner">Beginner</option>
-        <option ${id}O="Medium">Medium</option>
-        <option ${id}A="Advanced">Advanced</option>
-        </select>
-        <input id=${id}M title='Meaning'  value=""></input>   
-        <button onclick=" Save('${id}'); ">Save</button>  
-  `;
-  $('#NewWord').html(s); 
+function NewWord() {  
+  $('#NewWord').html( EditWord("NewWord", "Beginner", "Meaning", {}) ); 
 }
 
-function EditWord(v,c,m) { 
-  var id=v; 
+
+function EditWord(v,c,m, O) { 
+  var id=v, cat = '', cats = ["Beginner", "Medium", "Advanced"];
+  for (const e of cats) { 
+    if(c==e) selected='selected'; else selected=''; 
+    cat += `<option ${selected}>${e}</option>`; 
+  }
   var s= `
          <input id=${id}W title='Word'  value="${v}">   </input> 
-         <input id=(${id}B, ${id}O, ${id}A) title='Category'  value="${c}">   </input> 
+         <select id=${id}C title='Category'>${cat}</select> 
          <input id=${id}M title='Meaning'  value="${m}">   </input> 
-        <button onclick=" Save('${id}'); ">Save Edits</button>  
+         <span>${O.modifier?O.modifier:''}</span>
+        <button onclick=" Save('${id}'); ">Save</button>  
   `;
   return s;  
 }
 
 function Save(id){ var d={}; 
-  var v=$(`#${id}W`).val(), c=$(`#${id}O`).val(), m=$(`#${id}M`).val(); 
-  var v = (v=='')?'t':v;  
-  db.doc(`${dbWords}/${v}`).set({category:c, meaning:m, creater:email});
+  var v=$(`#${id}W`).val(), c=$(`#${id}C`).val(), m=$(`#${id}M`).val(); 
+  db.doc(`${dbWords}/${v}`).set({category:c, meaning:m, modifier:email});
 }
 
 function List(docid, oid) { 
- db.collection(docid).get()
- .then((querySnapshot) => {
+ db.collection(docid)
+ .onSnapshot((querySnapshot) => {  //.get().then((querySnapshot) => {
         var s = '', i=0;
         querySnapshot.forEach((doc) => { var d=doc.data(), id=doc.id;  i++; 
-           // console.log(doc.id, " => ", doc.data());
-            s += '<br/>'+EditWord(doc.id, d.category, d.meaning)
+            s += `<br/> (${i})`+EditWord(doc.id, d.category, d.meaning, {modifier:d.modifier});
         });
         $('#'+oid).html(s);
     })
