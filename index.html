@@ -40,6 +40,8 @@
 <body>
     <span id=Top11 >HOME</span>     
     <span style='float:right;'> <span id=Login data-logged=0>Login</span>   </span>
+    <button onclick="selectLevel()">Select a Level!</button>
+    <span id = Level>Level: </span>
   <div id=Top21></div>
   <hr/>
 
@@ -57,20 +59,20 @@
 
     <tr width="100%" align="left" >
       <td valign="top"> Student <br>
-         <input id=SubmitUserInput value=""/> <br>
-        <button id=SubmitButton onclick="checkWord()" >Submit</button> <br>
+        <input id=SubmitUserInput value=""/> <br>
+        <button id=SubmitButton onclick="checkWord(), submitWord()" >Submit</button> <br>
+        <span id=Output> Output:</span> <br>
       </td>
     </tr> 
   </table>
  
     <script>
-
+var text;
+var level = prompt("Please enter a difficulty level:", "Beginner");
 var dbWords = '/wordle/words/word'; 
 function NewWord() {  
   $('#NewWord').html( EditWord("NewWord", "Beginner", "Meaning", {}) ); 
 }
-
-
 function EditWord(v,c,m, O) { 
   var id=v, cat = '', cats = ["Beginner", "Medium", "Advanced", "Ignore"];
   for (const e of cats) { 
@@ -86,12 +88,10 @@ function EditWord(v,c,m, O) {
   `;
   return s;  
 }
-
 function Save(id){ var d={}; 
   var v=$(`#${id}W`).val(), c=$(`#${id}C`).val(), m=$(`#${id}M`).val(); 
   db.doc(`${dbWords}/${v}`).set({category:c, meaning:m, modifier:email});
 }
-
 function List(docid, oid) { 
  db.collection(docid)
  .onSnapshot((querySnapshot) => {  //.get().then((querySnapshot) => {
@@ -112,13 +112,10 @@ function List(docid, oid) {
     })
 
 }
-
-
 function update(id, e) { var k=e.attr('k'), v = e.val(); 
  var d={}; d[k]=v; 
  db.doc(id).set(d, {merge:true}); 
 }
-
 test({});
   function test(O) {
     db.doc('/wordle/test').onSnapshot(function(doc) {
@@ -184,119 +181,94 @@ function initApp(O) {
         $('#'+id).html( signout);
       } 
 
+function selectLevel() {
+  if (level == null || level == "") {
+    text = "No Level!";
+  } else {
+    text = "You have selected the  " + level + " level!";
+  }
+  document.getElementById("Level").innerHTML = text;
+} 
 function submitWord() {
 
-        var submitbox = document.getElementById("SubmitUserInput")
-        var submitbutton = document.getElementById("SubmitButton")
-        var database = db.collection('wordle')
+    var submitbox = document.getElementById("SubmitUserInput")
+    var submitbutton = document.getElementById("SubmitButton")
+    var database = db.collection('wordle')
 
-        db.collection("wordle").where("category", "==", "Beginner")
-        .get()
-        .then((querySnapshot) => {
-        querySnapshot.forEach((doc) => {
-            // doc.data() is never undefined for query doc snapshots
-            console.log(doc.id, " => ", doc.data());
+    if (level == "Beginner") {
+      db.collection("wordle").where("category", "==", level)
+      .get()
+      .then((querySnapshot) => {
+      querySnapshot.forEach((doc) => {
+          // doc.data() is never undefined for query doc snapshots
+          console.log(doc.id, " => ", doc.data());
+          var data = doc.data();
+          var word = data.word;
+          var category = data.category;
+          console.log(word);
+      });
+      })
+      .catch((error) => {
+         console.log("Error getting documents: ", error);
+      });
+    }
+    if (level == "Medium") {
+      db.collection("wordle").where("category", "==", level)
+     .get()
+     .then((querySnapshot) => {
+     querySnapshot.forEach((doc) => {
+        // doc.data() is never undefined for query doc snapshots
+        console.log(doc.id, " => ", doc.data());
+
             
-        });
-    })
-    .catch((error) => {
-        console.log("Error getting documents: ", error);
-    });
-  }
-function checkWord() {
-        var box = document.getElementById("SubmitUserInput").value;
-        var word = "Apple";
+  });
+  })
+  .catch((error) => {
+     console.log("Error getting documents: ", error);
+  });
+ }  
+}   
+function checkWord(box) {
+  
+        var CW = "Apple";
         var good = "Good Job!";
+        var UW = document.getElementById("SubmitUserInput").value;
 
-        box = box.toLowerCase();
-        word = word.toLowerCase();
-
-        wordsplit =  word.split("");
-
-        console.log(wordsplit);
-        console.log(box[0])
-
-        console.log(wordsplit.indexOf(box));
+        UW = UW.toLowerCase();
+        CW = CW.toLowerCase();
 
 
-        if (box[0] == word[0]) {
-          console.log("letter is in the right location")
+        CWA = CW.split(""); 
+        UWA = UW.split("");
+
+        var nu = UWA.length;
+
+        var color = "grey", text = "";
+
+        if (nu != 5) {
+          alert("Please enter 5 letters!");
+          return; 
         }
-        else;
-          console.log("letter isnt in the right location")
 
-        if (box[1] == word[1]) {
-          console.log("letter is in the right location")
+        for (let i = 0; i < UWA.length; i++) {
+           var uc = UWA[i], cc = CWA[i];
+           indx = CWA.indexOf(UWA[i]);
+           if (indx == -1) {
+            color = "grey";
+           } else if (indx === i) {
+            color = "green";
+           } else if (uc == cc) {
+            color = "green";
+           } else {
+            color = "yellow";
+           } 
+             
+           text += `<span style = 'background-color:${color}'> ${UWA[i]} </span>`;
         }
-        else;
-          console.log("letter isnt in the right location")
-        if (box[2] == word[2]) {
-          console.log("letter is in the right location")
-        }
-        else;
-          console.log("letter isnt in the right location")
-        if (box[3] == word[3]) {
-          console.log("letter is in the right location")
-        }
-        else;
-          console.log("letter isnt in the right location")
-        if (box[4] == word[4]) {
-          console.log("letter is in the right location")
-        }
-        else;
-          console.log("letter isnt in the right location")
 
-        if (box.value == word) {
-          console.log(good)
-        }
-        else;
-          console.log("The word is not correct!")
-        
-      }
-function checkWord2(box) {
-        var word = "Apple";
-        var good = "Good Job!";
-
-        box = box.toLowerCase();
-        word = word.toLowerCase();
-
-        wordsplit =  word.split("");
-
-        console.log(wordsplit);
-        console.log(box)
-        console.log(word)
-
-
-        //console.log(wordsplit.indexOf(box));
-
-     
-        if (box[0]==word[0]) {
-          console.log("The letter ", word[0], "is in the correct place")
-        }
-        else;
-          console.log("The letter ", word[0], "is not in the correct place")
-        if (box[1]==word[1]) {
-          console.log("The letter ", word[0], "is in the correct place")
-        }
-        else;
-          console.log("The letter ", word[0], "is not in the correct place")
-        if (box[2]==word[2]) {
-          console.log("The letter ", word[0], "is in the correct place")
-        }
-        else;
-          console.log("The letter ", word[0], "is not in the correct place")
-        if (box[3]==word[3]) {
-          console.log("The letter ", word[0], "is in the correct place")
-        }
-        else;
-          console.log("The letter ", word[0], "is not in the correct place")
-        if (box[0]==word[4]) {
-          console.log("The letter ", word[0], "is in the correct place")
-        }
-        else;
-          console.log("The letter ", word[0], "is not in the correct place")
-      }      
-    </script>
+        $("#Output").html(text);
+      } 
+   </script>
 </body>
 
 </html>
