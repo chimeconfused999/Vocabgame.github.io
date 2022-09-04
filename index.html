@@ -57,14 +57,14 @@
 
     <tr width="100%" align="left" >
       <td valign="top"> Student <br>
-         <input id=SubmitUserInput value=""  /> <br>
-        <button id=SubmitUserInput>Submit</button> <br>
+         <input id=SubmitUserInput value=""/> <br>
+        <button id=SubmitButton onclick="checkWord()" >Submit</button> <br>
       </td>
     </tr> 
-
   </table>
  
     <script>
+
 var dbWords = '/wordle/words/word'; 
 function NewWord() {  
   $('#NewWord').html( EditWord("NewWord", "Beginner", "Meaning", {}) ); 
@@ -184,6 +184,45 @@ function initApp(O) {
         $('#'+id).html( signout);
       } 
 
+      function submitWord() {
+
+        var submitbox = document.getElementById("SubmitUserInput")
+        var submitbutton = document.getElementById("SubmitButton")
+        var database = db.collection('wordle')
+
+        db.collection("wordle").where("category", "==", "Beginner")
+        .get()
+        .then((querySnapshot) => {
+        querySnapshot.forEach((doc) => {
+            // doc.data() is never undefined for query doc snapshots
+            console.log(doc.id, " => ", doc.data());
+            
+        });
+    })
+    .catch((error) => {
+        console.log("Error getting documents: ", error);
+    });
+  }
+      function checkWord() {
+        var box = document.getElementById("SubmitUserInput")
+        var word = "Apple"
+        var good = "Good Job!"
+
+        wordsplit =  word.split("");
+
+        console.log(wordsplit);
+
+        if (box[0] = word[0]) {
+          console.log("works")
+        }
+
+        if (box.value == word) {
+          console.log(good)
+        }
+        else;
+          console.log("No")
+        
+      }
     </script>
 </body>
 
