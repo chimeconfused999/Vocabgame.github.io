@@ -184,7 +184,7 @@ function initApp(O) {
         $('#'+id).html( signout);
       } 
 
-      function submitWord() {
+function submitWord() {
 
         var submitbox = document.getElementById("SubmitUserInput")
         var submitbutton = document.getElementById("SubmitButton")
@@ -203,41 +203,99 @@ function initApp(O) {
         console.log("Error getting documents: ", error);
     });
   }
-      function checkWord() {
-        var box = document.getElementById("SubmitUserInput")
-        var word = "Apple"
-        var good = "Good Job!"
+function checkWord() {
+        var box = document.getElementById("SubmitUserInput").value;
+        var word = "Apple";
+        var good = "Good Job!";
+
+        box = box.toLowerCase();
+        word = word.toLowerCase();
 
         wordsplit =  word.split("");
 
         console.log(wordsplit);
+        console.log(box[0])
 
-        if (box[0] = word[0]) {
-          console.log("works")
+        console.log(wordsplit.indexOf(box));
+
+
+        if (box[0] == word[0]) {
+          console.log("letter is in the right location")
         }
-        if (box[1] = word[1]) {
-          console.log("works")
+        else;
+          console.log("letter isnt in the right location")
+
+        if (box[1] == word[1]) {
+          console.log("letter is in the right location")
         }
-        if (box[2] = word[2]) {
-          console.log("works")
+        else;
+          console.log("letter isnt in the right location")
+        if (box[2] == word[2]) {
+          console.log("letter is in the right location")
         }
-        if (box[3] = word[3]) {
-          console.log("works")
+        else;
+          console.log("letter isnt in the right location")
+        if (box[3] == word[3]) {
+          console.log("letter is in the right location")
         }
-        if (box[4] = word[4]) {
-          console.log("works")
+        else;
+          console.log("letter isnt in the right location")
+        if (box[4] == word[4]) {
+          console.log("letter is in the right location")
         }
-        if (box[5] = word[5]) {
-          console.log("works")
-        }
+        else;
+          console.log("letter isnt in the right location")
 
         if (box.value == word) {
           console.log(good)
         }
         else;
-          console.log("No")
+          console.log("The word is not correct!")
         
       }
+function checkWord2(box) {
+        var word = "Apple";
+        var good = "Good Job!";
+
+        box = box.toLowerCase();
+        word = word.toLowerCase();
+
+        wordsplit =  word.split("");
+
+        console.log(wordsplit);
+        console.log(box)
+        console.log(word)
+
+
+        //console.log(wordsplit.indexOf(box));
+
+     
+        if (box[0]==word[0]) {
+          console.log("The letter ", word[0], "is in the correct place")
+        }
+        else;
+          console.log("The letter ", word[0], "is not in the correct place")
+        if (box[1]==word[1]) {
+          console.log("The letter ", word[0], "is in the correct place")
+        }
+        else;
+          console.log("The letter ", word[0], "is not in the correct place")
+        if (box[2]==word[2]) {
+          console.log("The letter ", word[0], "is in the correct place")
+        }
+        else;
+          console.log("The letter ", word[0], "is not in the correct place")
+        if (box[3]==word[3]) {
+          console.log("The letter ", word[0], "is in the correct place")
+        }
+        else;
+          console.log("The letter ", word[0], "is not in the correct place")
+        if (box[0]==word[4]) {
+          console.log("The letter ", word[0], "is in the correct place")
+        }
+        else;
+          console.log("The letter ", word[0], "is not in the correct place")
+      }      
     </script>
 </body>
 
