@@ -60,8 +60,8 @@
     <tr width="100%" align="left" >
       <td valign="top"> Student <br>
         <input id=SubmitUserInput value=""/> <br>
-        <button id=SubmitButton onclick="checkWord(), submitWord()" >Submit</button> <br>
-        <span id=Output> Output:</span> <br>
+        <button id=SubmitButton onclick="submitWord()" >Submit</button> <br>
+        <span id=Output class="output"> Output:</span> <br>
       </td>
     </tr> 
   </table>
@@ -189,85 +189,64 @@ function selectLevel() {
   }
   document.getElementById("Level").innerHTML = text;
 } 
-function submitWord() {
-
-    var submitbox = document.getElementById("SubmitUserInput")
-    var submitbutton = document.getElementById("SubmitButton")
-    var database = db.collection('wordle')
-
-    if (level == "Beginner") {
-      db.collection("wordle").where("category", "==", level)
+function getWord() {
+  db.collection("wordle").where("category", "==", level)
       .get()
       .then((querySnapshot) => {
       querySnapshot.forEach((doc) => {
           // doc.data() is never undefined for query doc snapshots
           console.log(doc.id, " => ", doc.data());
           var data = doc.data();
-          var word = data.word;
+          var CW = data.word;
           var category = data.category;
-          console.log(word);
-      });
-      })
-      .catch((error) => {
-         console.log("Error getting documents: ", error);
-      });
+          console.log(CW);
+
+}
+function submitWord() {
+
+    var submitbox = document.getElementById("SubmitUserInput")
+    var submitbutton = document.getElementById("SubmitButton")
+    var database = db.collection('wordle')
+   
+      var CW = word;
+      var good = "Good Job!";
+      var UW = document.getElementById("SubmitUserInput").value;
+
+      UW = UW.toLowerCase();
+      CW = CW.toLowerCase();
+
+
+      CWA = CW.split(""); 
+      UWA = UW.split("");
+
+      var nu = UWA.length;
+
+      if (nu != 5) {
+         alert("Please enter 5 letters!");
+         return; 
+      }
+
+      var color = "grey", text = "";
+
+      for (let i = 0; i < UWA.length; i++) {
+        var uc = UWA[i], cc = CWA[i];
+        indx = CWA.indexOf(UWA[i]);
+        if (indx == -1) {
+          color = "grey";
+        } else if (indx === i) {
+          color = "green";
+        } else if (uc == cc) {
+          color = "green";
+        } else {
+          color = "yellow";
+        } 
+              
+        text += `<span style = 'background-color:${color}'> ${UWA[i]} </span>`;
+      }
+
+      $("#Output").html(text);
+
     }
-    if (level == "Medium") {
-      db.collection("wordle").where("category", "==", level)
-     .get()
-     .then((querySnapshot) => {
-     querySnapshot.forEach((doc) => {
-        // doc.data() is never undefined for query doc snapshots
-        console.log(doc.id, " => ", doc.data());
-
-            
-  });
-  })
-  .catch((error) => {
-     console.log("Error getting documents: ", error);
-  });
- }  
-}   
-function checkWord(box) {
-  
-        var CW = "Apple";
-        var good = "Good Job!";
-        var UW = document.getElementById("SubmitUserInput").value;
-
-        UW = UW.toLowerCase();
-        CW = CW.toLowerCase();
-
-
-        CWA = CW.split(""); 
-        UWA = UW.split("");
-
-        var nu = UWA.length;
-
-        var color = "grey", text = "";
-
-        if (nu != 5) {
-          alert("Please enter 5 letters!");
-          return; 
-        }
-
-        for (let i = 0; i < UWA.length; i++) {
-           var uc = UWA[i], cc = CWA[i];
-           indx = CWA.indexOf(UWA[i]);
-           if (indx == -1) {
-            color = "grey";
-           } else if (indx === i) {
-            color = "green";
-           } else if (uc == cc) {
-            color = "green";
-           } else {
-            color = "yellow";
-           } 
-             
-           text += `<span style = 'background-color:${color}'> ${UWA[i]} </span>`;
-        }
-
-        $("#Output").html(text);
-      } 
    </script>
 </body>
 
