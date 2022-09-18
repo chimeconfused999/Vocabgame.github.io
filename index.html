@@ -62,6 +62,7 @@
         <input id=SubmitUserInput value=""/> <br>
         <button id=SubmitButton onclick="submitWord()" >Submit</button> <br>
         <span id=Output class="output"> Output:</span> <br>
+        <span id=Output class="tries"> Number of Tries:</span> <br>
       </td>
     </tr> 
   </table>
@@ -205,9 +206,10 @@ function getWord() {
 }
 function submitWord() {
 
-    var submitbox = document.getElementById("SubmitUserInput")
-    var submitbutton = document.getElementById("SubmitButton")
-    var database = db.collection('wordle')
+    var numberoftries = 0;
+    var submitbox = document.getElementById("SubmitUserInput");
+    var submitbutton = document.getElementById("SubmitButton");
+    var database = db.collection('wordle');
    
       var CW = "apple";
       var good = "Good Job!";
@@ -232,6 +234,7 @@ function submitWord() {
       for (let i = 0; i < UWA.length; i++) {
         var uc = UWA[i], cc = CWA[i];
         indx = CWA.indexOf(UWA[i]);
+        numberoftries = numberoftries + 1;
         if (indx == -1) {
           color = "grey";
         } else if (indx === i) {
@@ -243,6 +246,11 @@ function submitWord() {
         } 
               
         text += `<span style = 'background-color:${color}'> ${UWA[i]} </span>`;
+
+       // if (UW == CW) {
+       //   alert(good)
+       //   stop
+       // }
       }
 
       $("#Output").html(text);
