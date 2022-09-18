@@ -191,15 +191,16 @@ function selectLevel() {
 } 
 function getWord() {
   db.collection("wordle").where("category", "==", level)
-      .get()
-      .then((querySnapshot) => {
+  .get()
+  .then((querySnapshot) => {
       querySnapshot.forEach((doc) => {
-          // doc.data() is never undefined for query doc snapshots
+          
           console.log(doc.id, " => ", doc.data());
-          var data = doc.data();
-          var CW = data.word;
-          var category = data.category;
-          console.log(CW);
+      });
+  })
+  .catch((error) => {
+      console.log("Error getting documents: ", error);
+  });
 
 }
 function submitWord() {
@@ -208,7 +209,7 @@ function submitWord() {
     var submitbutton = document.getElementById("SubmitButton")
     var database = db.collection('wordle')
    
-      var CW = word;
+      var CW = "apple";
       var good = "Good Job!";
       var UW = document.getElementById("SubmitUserInput").value;
 
