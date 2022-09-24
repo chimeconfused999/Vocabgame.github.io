@@ -158,13 +158,26 @@ function getWord() {
 }
 function submitWord() {
 
-    var numberoftries = 0;
-    var submitbox = document.getElementById("SubmitUserInput");
-    var submitbutton = document.getElementById("SubmitButton");
-    var database = db.collection('wordle');
-    var triesbox = document.getElementById("Tries")
+      var numberoftries = 0;
+      var submitbox = document.getElementById("SubmitUserInput");
+      var submitbutton = document.getElementById("SubmitButton");
+      var database = db.collection('wordle');
+      var triesbox = document.getElementById("Tries")
 
-      var CW = "apple";
+      var query = database.where("category", "==", level)
+        .get()
+        .then((querySnapshot) => {
+          querySnapshot.forEach((doc) => {
+              // doc.data() is never undefined for query doc snapshots
+              console.log(doc.id, " => ", doc.data());
+              CW = doc.data();
+          });
+      })
+      .catch((error) => {
+          console.log("Error getting documents: ", error);
+      });
+
+     // var CW = "apple";
       var good = "Good Job!";
       var UW = document.getElementById("SubmitUserInput").value;
 
@@ -176,7 +189,6 @@ function submitWord() {
       UWA = UW.split("");
 
       var nu = UWA.length;
-
       if (nu != 5) {
          alert("Please enter 5 letters!");
          return; 
