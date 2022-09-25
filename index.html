@@ -159,28 +159,33 @@ function getWord() {
 }
 function submitWord() {
 
-      var numberoftries = 0, NumberOfWords = 21; //Needs to be changed
-      var submitbox = document.getElementById("SubmitUserInput");
-      var submitbutton = document.getElementById("SubmitButton");
+      var NumberOfWords = 21; //Needs to be changed
       var database = db.collection('wordle');
-      var triesbox = document.getElementById("Tries")
-      var randomnumber = Math.floor(Math.random() * NumberOfWords);
-
-      var query = db.collection("/wordle/words/word").where("order", ">", 10).where("order","<",15)
+      var query = db.collection("/wordle/words/word").where("category", "==", level)
+        .where("order", ">=", Math.floor(Math.random() * NumberOfWords) + 1).limit(1)
         .get()
         .then((querySnapshot) => {
           querySnapshot.forEach((doc) => {
               // doc.data() is never undefined for query doc snapshots
               console.log(doc.id, " => ", doc.data());
               var data = doc.data();
-              var CW = doc.get("word");
-              console.log(CW)
+              var CW = doc.id; //doc.get("word");
+              CheckWord(CW);
+              console.log(CW);
           });
       })
       .catch((error) => {
           console.log("Error getting documents: ", error);
       });
       
+    }
+
+  function CheckWord(CW) {
+
+      var triesbox = document.getElementById("Tries")
+      var numberoftries = 0;
+      var submitbox = document.getElementById("SubmitUserInput");
+      var submitbutton = document.getElementById("SubmitButton");
      // var CW = "apple";
       var good = "Good Job!"; 
       var UW = document.getElementById("SubmitUserInput").value;
