@@ -162,7 +162,7 @@ function submitWord() {
       var NumberOfWords = 21; //Needs to be changed
       var database = db.collection('wordle');
       var query = db.collection("/wordle/words/word").where("category", "==", level)
-        .where("order", ">=", Math.floor(Math.random() * NumberOfWords) + 1).limit(1)
+        .where("order", ">=", Math.floor(Math.random() * 10) + 1).limit(1)
         .get()
         .then((querySnapshot) => {
           querySnapshot.forEach((doc) => {
@@ -220,6 +220,7 @@ function submitWord() {
               
         
         text += `<span style = 'background-color:${color}'> ${UWA[i]} </span>`;
+       // text += `<span style = 'background-color:${color}'> ${UWA[i]} </span>`;
 
       numberoftries + 1 
       triesbox == numberoftries
