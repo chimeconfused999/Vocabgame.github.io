@@ -107,7 +107,8 @@ function List(docid, oid) {
          `;
         var i=0;
         querySnapshot.forEach((doc) => { var d=doc.data(), id=doc.id;  i++; 
-            s += `<div class=${d.category}>(${i}) ${d.category}`+EditWord(doc.id, d.category, d.meaning, {modifier:d.modifier}) + `</div>`;
+            if(!d.order) db.doc(`${docid}/${doc.id}`).update({order:i});
+            s += `<div class=${d.category}>(${i} ${docid}/${doc.id}) ${id}`+EditWord(doc.id, d.category, d.meaning, {modifier:d.modifier}) + `</div>`;
         });
         $('#'+oid).html(s);
     })
@@ -158,27 +159,30 @@ function getWord() {
 }
 function submitWord() {
 
-      var numberoftries = 0;
+      var numberoftries = 0, NumberOfWords = 21; //Needs to be changed
       var submitbox = document.getElementById("SubmitUserInput");
       var submitbutton = document.getElementById("SubmitButton");
       var database = db.collection('wordle');
       var triesbox = document.getElementById("Tries")
+      var randomnumber = Math.floor(Math.random() * NumberOfWords);
 
-      var query = database.where("category", "==", level)
+      var query = db.collection("/wordle/words/word").where("order", ">", 10).where("order","<",15)
         .get()
         .then((querySnapshot) => {
           querySnapshot.forEach((doc) => {
               // doc.data() is never undefined for query doc snapshots
               console.log(doc.id, " => ", doc.data());
-              CW = doc.data();
+              var data = doc.data();
+              var CW = doc.get("word");
+              console.log(CW)
           });
       })
       .catch((error) => {
           console.log("Error getting documents: ", error);
       });
-
+      
      // var CW = "apple";
-      var good = "Good Job!";
+      var good = "Good Job!"; 
       var UW = document.getElementById("SubmitUserInput").value;
 
       UW = UW.toLowerCase();
