@@ -60,9 +60,9 @@
     <tr width="100%" align="left" >
       <td valign="top"> Student <br>
         <input id=SubmitUserInput value=""/> <br>
-        <button id=SubmitButton onclick="submitWord()" >Submit</button> <br>
+        <button id=SubmitButton onclick="submitWord(), increaseTry()" >Submit</button> <br>
         <span id=Output class="output"> Output:</span> <br>
-        <span id=Tries class="tries"> Number of Tries:</span> <br>
+        <label id="Tries" class="Tries"> Number of Tries:</label> <br>
       </td>
     </tr> 
   </table>
@@ -179,11 +179,16 @@ function submitWord() {
       });
       
     }
+function increaseTry() {
+  var numberoftries = 0;
+  var triesbox = document.getElementById("Tries");
 
+  numberoftries = numberoftries + 1; 
+  triesbox.innerText = "Number of Tries: " + numberoftries;
+
+}
   function CheckWord(CW) {
 
-      var triesbox = document.getElementById("Tries")
-      var numberoftries = 0;
       var submitbox = document.getElementById("SubmitUserInput");
       var submitbutton = document.getElementById("SubmitButton");
      // var CW = "apple";
@@ -222,8 +227,9 @@ function submitWord() {
         text += `<span style = 'background-color:${color}'> ${UWA[i]} </span>`;
        // text += `<span style = 'background-color:${color}'> ${UWA[i]} </span>`;
 
-      numberoftries + 1 
-      triesbox == numberoftries
+      //alert(numberoftries)
+
+      //alert(triesbox.value)
       }
 
       $("#Output").html(text);
