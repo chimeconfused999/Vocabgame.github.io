@@ -61,7 +61,7 @@
     <tr width="100%" align="left" >
       <td valign="top"> Student <br>
         <input id=SubmitUserInput value=""/> <br>
-        <button id=SubmitButton onclick="submitWord()" >Submit</button> <br>
+        <button id=SubmitButton onclick="submitWord(), increaseTry()" >Submit</button> <br>
         <span id=Output class="output"> Output:</span> <br>
         <label id="Tries" class="Tries"> Number of Tries:</label> <br>
       </td>
@@ -198,7 +198,6 @@ function increaseTry() {
   var triesbox = document.getElementById("Tries");
 
   numberoftries = numberoftries + 1; 
-  print(numberoftries)
   triesbox.innerText = "Number of Tries: " + numberoftries;
 
 }
@@ -237,8 +236,6 @@ function increaseTry() {
         } else {
           color = "yellow";
         } 
-
-        increaseTry()
               
         
         text += `<span style = 'background-color:${color}'> ${UWA[i]} </span>`;
